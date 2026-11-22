@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SMARTBOT AI | Python Intelligence Engine</title>
+<style>
+:root{--bg:#09111c;--panel:#111e2d;--line:#263c52;--cyan:#55d8e8;--green:#62e6ad;--purple:#a99bff;--orange:#ffbf69;--muted:#91a7bc;--white:#eaf4fb}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% -20%,#1c3850 0,#09111c 55%);color:var(--white);font:14px Inter,system-ui,Arial,sans-serif}
+header{height:70px;display:flex;align-items:center;justify-content:space-between;padding:0 25px;border-bottom:1px solid var(--line);background:#0a1522e8;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:12px;font-weight:900;letter-spacing:2px}.logo{width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),#5878ff);display:grid;place-items:center;color:#07121d;font-size:21px}
+.brand small{display:block;color:var(--muted);font-size:9px;letter-spacing:2px;margin-top:3px}.status{color:var(--green);font-size:11px;letter-spacing:1px;border:1px solid #28644f;background:#102c27;padding:8px 12px;border-radius:20px}
+main{max-width:1500px;margin:auto;padding:20px;display:grid;grid-template-columns:minmax(0,1.8fr) minmax(310px,.9fr);gap:16px}
+.panel{background:linear-gradient(145deg,#142438,#101b29);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 14px 35px #0003}.panelhead{padding:15px 17px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.eyebrow{font-size:10px;letter-spacing:1.8px;color:var(--muted)}h2{font-size:14px;margin:4px 0 0;letter-spacing:.5px}.scene-wrap{height:500px;position:relative;background:#102234}#scene{width:100%;height:100%;display:block}.scene-tag{position:absolute;top:14px;left:15px;background:#071421c9;border:1px solid #36536a;padding:8px 11px;border-radius:9px;color:#cce4f3;font-size:11px}.legend{display:flex;gap:14px;flex-wrap:wrap;padding:12px 16px;color:var(--muted);font-size:11px}.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.controls{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;padding:14px 16px;border-top:1px solid var(--line)}label{display:block;color:var(--muted);font-size:10px;letter-spacing:1px;margin-bottom:7px}select,button{font:inherit;color:var(--white);background:#1a3045;border:1px solid #35516a;border-radius:9px;padding:10px;width:100%}button{cursor:pointer;font-weight:700}button.primary{background:linear-gradient(100deg,#1e9eae,#3477d8);border:0}button.stop{background:#482c39;border-color:#744052}
+.side{display:flex;flex-direction:column;gap:13px}.metrics{display:grid;grid-template-columns:1fr 1fr;gap:9px}.metric{background:#172a3c;border:1px solid var(--line);border-radius:12px;padding:13px}.metric .value{font-size:25px;font-weight:800;margin:7px 0 3px}.metric small{color:var(--muted);font-size:10px;letter-spacing:1px}.cyan{color:var(--cyan)}.green{color:var(--green)}.purple{color:var(--purple)}.orange{color:var(--orange)}.bar{height:7px;background:#26394b;border-radius:8px;overflow:hidden;margin-top:9px}.bar span{display:block;height:100%;background:linear-gradient(90deg,#40bfc9,#68e6b0);width:100%;transition:width .2s}
+.section{padding:14px 16px}.section+.section{border-top:1px solid var(--line)}.section-title{font-weight:800;font-size:12px;margin-bottom:10px}.log{height:130px;overflow:auto;font:11px/1.6 ui-monospace,monospace;color:#b6c9d8}.log div{padding:3px 0;border-bottom:1px solid #ffffff0b}.log b{color:var(--cyan);font-weight:600}.facts{display:grid;gap:6px;max-height:145px;overflow:auto}.fact{background:#192d40;padding:8px 9px;border-radius:8px;color:#bed0df;font-size:11px;display:flex;justify-content:space-between;gap:8px}.fact strong{color:var(--purple)}
+.bottom{grid-column:1/-1;display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:13px}.mini{padding:15px}.mini p{color:var(--muted);font-size:11px;line-height:1.55;margin:7px 0 0}.pill{font-size:10px;border:1px solid #37516a;border-radius:20px;padding:5px 8px;color:#c4d9e9}
+@media(max-width:900px){main{grid-template-columns:1fr}.bottom{grid-template-columns:1fr}.scene-wrap{height:390px}}@media(max-width:520px){header{padding:0 12px}.brand{font-size:12px}main{padding:11px}.controls{grid-template-columns:1fr 1fr}.scene-wrap{height:320px}}
+</style></head>
+<body>
+<header><div class="brand"><div class="logo">◉</div><div>SMARTBOT AI<small>PYTHON-POWERED AUTONOMOUS CLEANING</small></div></div><div class="status" id="connection">● CONNECTING TO PYTHON</div></header>
+<main>
+<section class="panel">
+ <div class="panelhead"><div><div class="eyebrow">LIVE ENVIRONMENT</div><h2>3D HOUSE SIMULATION</h2></div><span class="pill" id="runLabel">SESSION · READY</span></div>
+ <div class="scene-wrap"><canvas id="scene"></canvas><div class="scene-tag">ISOMETRIC ENVIRONMENT · LIVE PYTHON STATE</div></div>
+ <div class="legend"><span><i class="dot" style="background:#59d9b6"></i>Visited / clean</span><span><i class="dot" style="background:#e6a45f"></i>Dirty tile</span><span><i class="dot" style="background:#d66c78"></i>Obstacle</span><span><i class="dot" style="background:#62c7ff"></i>Robot</span><span><i class="dot" style="background:#a99bff"></i>Charging dock</span></div>
+ <div class="controls">
+  <div><label>SEARCH STRATEGY</label><select id="algorithm"><option value="ASTAR">A* Search</option><option value="BFS">Breadth First Search</option><option value="DFS">Depth First Search</option></select></div>
+  <div><label>ANIMATION SPEED</label><select id="speed"><option value="650">Normal</option><option value="300">Fast</option><option value="1100">Slow / Explain</option></select></div>
+  <div style="display:flex;align-items:end;gap:7px"><button class="primary" id="start">▶ START</button><button class="stop" id="pause">Ⅱ PAUSE</button></div>
+ </div>
+ <div class="controls" style="border-top:0;padding-top:0"><button id="newSession">↻ NEW SESSION</button><button id="resetMemory">RESET KNOWLEDGE BASE</button><span class="pill" style="display:grid;place-items:center">AI decisions run in Python</span></div>
+</section>
+<aside class="side">
+ <section class="panel">
+  <div class="panelhead"><div><div class="eyebrow">ROBOT TELEMETRY</div><h2>LIVE STATUS</h2></div><span class="pill" id="robotState">IDLE</span></div>
+  <div class="section"><div class="metrics">
+   <div class="metric"><small>BATTERY LEVEL</small><div class="value green" id="battery">100%</div><div class="bar"><span id="batteryBar"></span></div></div>
+   <div class="metric"><small>TILES CLEANED</small><div class="value cyan" id="cleaned">0/0</div><small>DIRT UNITS REMOVED</small></div>
+   <div class="metric"><small>COMPLETED RUNS</small><div class="value purple" id="sessions">0</div><small>PERSISTED IN SQLITE</small></div>
+   <div class="metric"><small>LEARNING SCORE</small><div class="value orange" id="learning">0%</div><small>EXPERIENCE INDICATOR</small></div>
+  </div></div>
+  <div class="section"><div class="section-title">PYTHON AI DECISION LOG</div><div class="log" id="log"><div><b>[API]</b> Waiting for Python backend.</div></div></div>
+ </section>
+ <section class="panel">
+  <div class="panelhead"><div><div class="eyebrow">PERSISTENT MEMORY</div><h2>KNOWLEDGE BASE</h2></div><span class="pill">SQLITE</span></div>
+  <div class="section"><div class="facts" id="facts"><div class="fact">Loading stored facts...</div></div></div>
+ </section>
+</aside>
+<section class="bottom">
+ <div class="panel mini"><div class="eyebrow">SEARCH INTELLIGENCE</div><h2 id="searchTitle">A* PATHFINDING</h2><p id="pathInfo">Python computes paths and returns the selected route and expanded-node count.</p></div>
+ <div class="panel mini"><div class="eyebrow">FUZZY + PROBABILISTIC AI</div><h2>ADAPTIVE CLEANING</h2><p id="learnInfo">Python estimates dirt probability from past observations and computes cleaning intensity using fuzzy rules.</p></div>
+ <div class="panel mini"><div class="eyebrow">EXPERT SYSTEM</div><h2>BATTERY MANAGEMENT</h2><p>Python rule: when battery becomes critical, suspend cleaning, calculate a route to the dock with A*, recharge, and resume.</p></div>
+</section>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/three@0.149.0/build/three.min.js"></script>></script>></script>
+<script>
+
+(() => {
+ const $=id=>document.getElementById(id);
+ let current=null, interval=null, busy=false, scene,camera,renderer,group,robotMesh,tiles=[];
+ const W=8,H=6, obstacleSet=new Set(), tileMeshes=new Map();
+ async function api(path,method='GET',body=null){
+   const opts={method,headers:{'Content-Type':'application/json'}};
+   if(body)opts.body=JSON.stringify(body);
+   const res=await fetch(path,opts);
+   if(!res.ok)throw new Error((await res.json()).error||'API request failed');
+   return res.json();
+ }
+ 
+ function addLog(message){const d=document.createElement('div');d.innerHTML='<b>['+new Date().toLocaleTimeString()+']</b> '+message;$('log').prepend(d)}
+ function init3D(){
+  const canvas=$('scene');scene=new THREE.Scene();scene.background=new THREE.Color(0x102234);
+  camera=new THREE.PerspectiveCamera(42,1,.1,100);camera.position.set(9,11,12);camera.lookAt(3.5,0,2.5);
+  renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  scene.add(new THREE.HemisphereLight(0xbceaff,0x263448,2));const light=new THREE.DirectionalLight(0xffffff,2);light.position.set(4,9,5);scene.add(light);
+  group=new THREE.Group();scene.add(group);
+  const floor=new THREE.Mesh(new THREE.BoxGeometry(W,.18,H),new THREE.MeshStandardMaterial({color:0x263d50,roughness:.85}));floor.position.set(3.5,-.14,2.5);group.add(floor);
+  for(let y=0;y<H;y++)for(let x=0;x<W;x++){
+    const m=new THREE.Mesh(new THREE.BoxGeometry(.94,.035,.94),new THREE.MeshStandardMaterial({color:0x36566b,roughness:.8}));
+    m.position.set(x,0,y);group.add(m);tileMeshes.set(`${x},${y}`,m);
+  }
+  const dock=new THREE.Mesh(new THREE.CylinderGeometry(.38,.38,.08,32),new THREE.MeshStandardMaterial({color:0x9e8bff,emissive:0x30236e}));dock.position.set(0,.08,0);group.add(dock);
+  robotMesh=new THREE.Mesh(new THREE.CylinderGeometry(.3,.34,.25,32),new THREE.MeshStandardMaterial({color:0x51cde2,metalness:.4,roughness:.3}));robotMesh.position.set(0,.27,0);group.add(robotMesh);
+  const dome=new THREE.Mesh(new THREE.SphereGeometry(.13,20,12),new THREE.MeshStandardMaterial({color:0xe7fbff,emissive:0x184d62}));dome.position.y=.43;robotMesh.add(dome);
+  const resize=()=>{const w=canvas.clientWidth,h=canvas.clientHeight;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()};new ResizeObserver(resize).observe(canvas);resize();animate();
+ }
+ function animate(){requestAnimationFrame(animate);if(current&&robotMesh){const [x,y]=current.robot;robotMesh.position.x+=(x-robotMesh.position.x)*.17;robotMesh.position.z+=(y-robotMesh.position.z)*.17;}renderer.render(scene,camera)}
+ function draw(s){
+  current=s;
+  const obstacles=new Set(s.obstacles.map(p=>p.join(','))),dirt=new Set(s.dirt.map(p=>p.join(','))),visited=new Set(s.facts.filter(f=>f.visits>0).map(f=>f.location.join(',')));
+  tileMeshes.forEach((mesh,k)=>{mesh.material.color.setHex(obstacles.has(k)?0x9c5866:dirt.has(k)?0xb77b45:visited.has(k)?0x397a72:0x36566b)});
+  group.children.filter(c=>c.userData.obstacle||c.userData.dirt).forEach(c=>group.remove(c));
+  s.obstacles.forEach(([x,y])=>{const m=new THREE.Mesh(new THREE.BoxGeometry(.9,.8,.9),new THREE.MeshStandardMaterial({color:0x9c5866}));m.position.set(x,.42,y);m.userData.obstacle=true;group.add(m)});
+  s.dirt.forEach(([x,y])=>{const m=new THREE.Mesh(new THREE.SphereGeometry(.12,12,8),new THREE.MeshStandardMaterial({color:0xeab16b,emissive:0x40200a}));m.position.set(x,.14,y);m.userData.dirt=true;group.add(m)});
+  $('battery').textContent=s.battery+'%';$('batteryBar').style.width=s.battery+'%';$('batteryBar').style.background=s.battery<20?'#ed7180':'linear-gradient(90deg,#40bfc9,#68e6b0)';
+  $('cleaned').textContent=s.cleaned+'/'+s.total_dirt;$('sessions').textContent=s.sessions;$('learning').textContent=s.learning_score+'%';
+  $('robotState').textContent=s.status;$('runLabel').textContent='SESSION '+s.sessions+' · '+s.status;
+  $('searchTitle').textContent=s.algorithm+' PATHFINDING';$('pathInfo').textContent=`Python ${s.algorithm} expanded ${s.expanded} nodes. Current route: ${s.last_path.map(p=>`(${p[0]},${p[1]})`).join(' → ')||'selecting target'}.`;
+  $('learnInfo').textContent=`Fuzzy cleaning intensity: ${s.cleaning_intensity}. Learned environmental facts: ${s.facts.length}. Dirt probability estimates are smoothed from recorded observations.`;
+  $('facts').innerHTML='';
+  if(!s.facts.length)$('facts').innerHTML='<div class="fact">No observations yet <strong>NEW</strong></div>';
+  s.facts.forEach(f=>{const d=document.createElement('div');d.className='fact';d.innerHTML=`<span>Tile (${f.location.join(',')}) · dirt likelihood ${(f.probability*100).toFixed(0)}%</span><strong>${f.visits} visits</strong>`;$('facts').appendChild(d)});
+ }
+ async function refresh(){try{draw(await api('/api/state'));$('connection').textContent='● PYTHON ENGINE ONLINE';}catch(e){$('connection').textContent='● BACKEND OFFLINE';}}
+ async function step(){if(busy)return;busy=true;try{const s=await api('/api/tick','POST');draw(s);addLog(s.last_decision);if(['COMPLETED','OUT_OF_ENERGY'].includes(s.status)){clearInterval(interval);interval=null;addLog('Session stopped. Knowledge base stored in SQLite.')}}catch(e){addLog('API error: '+e.message);clearInterval(interval);interval=null}finally{busy=false}}
+ async function start(){try{const algorithm=$('algorithm').value;await api('/api/start','POST',{algorithm});draw(await api('/api/state'));if(interval)clearInterval(interval);addLog('Python agent started using '+algorithm+'.');interval=setInterval(step,Number($('speed').value));}catch(e){addLog('Cannot start: '+e.message)}}
+ $('start').onclick=start;
+ $('pause').onclick=async()=>{if(interval)clearInterval(interval);interval=null;try{draw(await api('/api/pause','POST'));addLog('Simulation paused.')}catch(e){addLog(e.message)}};
+ $('algorithm').onchange=async()=>{try{draw(await api('/api/algorithm','POST',{algorithm:$('algorithm').value}));addLog('Search strategy updated in Python backend.')}catch(e){addLog(e.message)}};
+ $('speed').onchange=()=>{if(interval){clearInterval(interval);interval=setInterval(step,Number($('speed').value))}};
+ $('newSession').onclick=async()=>{if(interval)clearInterval(interval);interval=null;try{draw(await api('/api/new-session','POST',{algorithm:$('algorithm').value}));$('log').innerHTML='';addLog('New environment generated. Existing SQLite memory retained.')}catch(e){addLog(e.message)}};
+ $('resetMemory').onclick=async()=>{if(!confirm('Permanently clear the learned SQLite knowledge base and session history?'))return;if(interval)clearInterval(interval);interval=null;try{draw(await api('/api/reset-memory','POST'));addLog('Knowledge base reset.')}catch(e){addLog(e.message)}};
+ init3D();refresh();setInterval(refresh,4000);
+})();
+</script></body></html>
